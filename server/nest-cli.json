@@ -1,8 +1,37 @@
 {
-  "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true
+  },
+  "projects": {
+    "usuarios": {
+      "type": "library",
+      "root": "libs/usuarios",
+      "entryFile": "index",
+      "sourceRoot": "libs/usuarios/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/usuarios/tsconfig.lib.json"
+      }
+    },
+    "login": {
+      "type": "library",
+      "root": "libs/login",
+      "entryFile": "index",
+      "sourceRoot": "libs/login/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/login/tsconfig.lib.json"
+      }
+    },
+    "redis": {
+      "type": "library",
+      "root": "libs/redis",
+      "entryFile": "index",
+      "sourceRoot": "libs/redis/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/redis/tsconfig.lib.json"
+      }
+    }
   }
 }
