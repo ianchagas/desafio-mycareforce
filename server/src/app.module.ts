@@ -1,5 +1,6 @@
 import { LoginModule } from '@app/login';
 import { RedisModule } from '@app/redis';
+import { SharedModule } from '@app/shared';
 import { UsuariosModule } from '@app/usuarios';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -10,6 +11,7 @@ import { getMetadataArgsStorage } from 'typeorm';
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    SharedModule,
     UsuariosModule,
     LoginModule,
     RedisModule,
