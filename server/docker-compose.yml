@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres
+    container_name: click-nurse-db
+    restart: always
+    ports:
+      - 5436:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=click-nurse
+    volumes:
+      - pgdata:/data/postgres
+    networks:
+      - click-nurse
+
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: click-nurse-redis
+    ports:
+      - '6380:6380'
+    volumes:
+      - redis:/data/redis
+    environment:
+      - REDIS_PASSWORD=password
+      - REDIS_PORT=6380
+      - REDIS_DATABASES=1
+    networks:
+      - click-nurse
+
+volumes:
+  pgdata:
+    driver: local
+  redis:
+    driver: local
+
+networks:
+  click-nurse:
+    driver: bridge
