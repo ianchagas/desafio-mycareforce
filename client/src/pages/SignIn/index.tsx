@@ -8,6 +8,7 @@ import { useAuth } from "../../hooks/auth";
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
 
   const { signIn } = useAuth();
 
@@ -16,7 +17,7 @@ const SignIn: React.FC = () => {
       <Logo>
         <img src={logImg} alt="Click Nurse" />
       </Logo>
-      <Form onSubmit={() => signIn(email, password)}>
+      <Form onSubmit={() => signIn(email, password, passwordConfirmation)}>
         <FormTitle>Entrar</FormTitle>
         <Input
           placeholder="Email"
@@ -30,6 +31,13 @@ const SignIn: React.FC = () => {
           type="password"
           required
           onChange={(event) => setPassword(event.target.value)}
+        />
+
+        <Input
+          placeholder="Confirme sua senha"
+          type="password"
+          required
+          onChange={(event) => setPasswordConfirmation(event.target.value)}
         />
 
         <Button type="submit">Entrar</Button>

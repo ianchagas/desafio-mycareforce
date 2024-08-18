@@ -2,7 +2,7 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 interface IAuthContext {
   logged: boolean;
-  signIn(email: string, password: string): void;
+  signIn(email: string, password: string, passwordConfirmation: string): void;
   signOut(): void;
 }
 
@@ -15,7 +15,11 @@ const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     return !!isLogged;
   });
 
-  const signIn = (email: string, password: string) => {
+  const signIn = (
+    email: string,
+    password: string,
+    passwordConfirmation: string
+  ) => {
     if (email === "ian@teste.com.br" && password === "123") {
       localStorage.setItem("@react-clicknurse:logged", "true");
       setLogged(true);

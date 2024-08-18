@@ -6,17 +6,16 @@ export abstract class JwtCreate {
   private static readonly refreshSecretKey = process.env.JWT_REFRESH_SECRET;
 
   static async execute(data: JwtObjectDto): Promise<JwtDto> {
-    const today = new Date();
-    const expiresInSeconds = 24 * 60 * 60;
-    const exp = Math.floor(today.getTime() / 1000) + expiresInSeconds;
+    const accessTokenExpiresIn = Math.floor(Date.now() / 1000) + 5 * 60;
 
     const generateJwt = jwt.sign(
       {
         data,
+        expires_in: accessTokenExpiresIn,
       },
       this.jwtSecretKey,
       {
-        expiresIn: '1d',
+        expiresIn: '5m',
       },
     );
 
@@ -26,14 +25,14 @@ export abstract class JwtCreate {
       },
       this.refreshSecretKey,
       {
-        expiresIn: '2d',
+        expiresIn: '10m',
       },
     );
 
     return {
       access_token: generateJwt,
       refresh_token: refreshToken,
-      expires_in: exp,
+      expires_in: accessTokenExpiresIn,
     };
   }
 }

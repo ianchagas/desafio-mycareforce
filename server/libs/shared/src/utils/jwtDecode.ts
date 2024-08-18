@@ -17,7 +17,7 @@ export abstract class JwtDecode {
         return jwt.verify(token, this.refreshSecretKey) as JwtDecodeDto;
       }
     } catch (error) {
-      throw new UnauthorizedException('Token invalido.');
+      throw new UnauthorizedException('Token invalido ou expirado.');
     }
   }
 }

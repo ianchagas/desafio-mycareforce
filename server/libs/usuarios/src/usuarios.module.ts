@@ -12,6 +12,7 @@ import { UpdateUsuarioUsecase } from './usecase/update/update';
 import { FindByEmailPasswordUsecase } from './usecase/findByEmailPassword/findByEmailPassword';
 import { ConfigModule } from '@nestjs/config';
 import { FindByEmailUsecase } from './usecase/findByEmail/findByEmail';
+import { RedisModule } from '@app/redis';
 
 const UsuariosProviders = [
   UsuarioRepository,
@@ -25,7 +26,7 @@ const UsuariosProviders = [
   FindByEmailUsecase,
 ];
 @Module({
-  imports: [TypeOrmModule.forFeature([UsuariosEntity])],
+  imports: [TypeOrmModule.forFeature([UsuariosEntity]), RedisModule],
   providers: [...UsuariosProviders],
   controllers: [UsuariosController],
   exports: [...UsuariosProviders],

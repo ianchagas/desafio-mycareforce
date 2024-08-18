@@ -2,10 +2,10 @@ import { RedisModule as NestRedisModule } from '@liaoliaots/nestjs-redis';
 import { Module } from '@nestjs/common';
 import { RedisService } from './redis.service';
 import { ConfigModule } from '@nestjs/config';
-import { RedisController } from './redis.controller';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     NestRedisModule.forRoot({
       config: {
         host: process.env.REDIS_HOST,
@@ -15,6 +15,6 @@ import { RedisController } from './redis.controller';
   ],
   providers: [RedisService],
   exports: [RedisService],
-  controllers: [RedisController],
+  controllers: [],
 })
 export class RedisModule {}
