@@ -20,6 +20,10 @@ const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     password: string,
     passwordConfirmation: string
   ) => {
+    if (password !== passwordConfirmation) {
+      alert("Passwords diferentes");
+    }
+
     if (email === "ian@teste.com.br" && password === "123") {
       localStorage.setItem("@react-clicknurse:logged", "true");
       setLogged(true);
