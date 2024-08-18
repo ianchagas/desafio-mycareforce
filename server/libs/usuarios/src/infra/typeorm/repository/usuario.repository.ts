@@ -89,7 +89,15 @@ export class UsuarioRepository implements IUsuarioRepository {
     return null;
   }
 
-  async ban(uuid: string): Promise<any> {
-    return null;
+  async ban(uuid: string): Promise<void> {
+    await this.usuarioRepository
+      .createQueryBuilder()
+      .update({
+        isBanned: true,
+        deletedAt: new Date(),
+      })
+      .where({ uuid })
+      .returning([])
+      .execute();
   }
 }
