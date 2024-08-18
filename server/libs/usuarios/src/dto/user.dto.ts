@@ -1,4 +1,10 @@
-import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { UserRole } from '../enum/userRole.enum';
 import { IsNotBlank } from '@app/shared/decorators/class-validator/IsNotBlank.decorator';
 
@@ -55,4 +61,10 @@ export class UpdateUsuarioDto {
   email: string;
   role: UserRole;
   password: string;
+}
+
+export class GetUsuariosQueryParamsDto {
+  @IsOptional()
+  @IsString()
+  searchTerm?: string;
 }

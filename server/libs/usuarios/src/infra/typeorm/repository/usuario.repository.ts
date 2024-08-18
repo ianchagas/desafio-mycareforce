@@ -12,7 +12,7 @@ export class UsuarioRepository implements IUsuarioRepository {
     private usuarioRepository: Repository<UsuariosEntity>,
   ) {}
 
-  async create(payload: CreateUsuarioDto): Promise<any> {
+  async create(payload: CreateUsuarioDto): Promise<UsuariosEntity> {
     const usuarioObject = await this.usuarioRepository.create(payload);
 
     return await this.usuarioRepository.save(usuarioObject);
@@ -22,11 +22,50 @@ export class UsuarioRepository implements IUsuarioRepository {
     return null;
   }
 
-  async find(query: any): Promise<any> {
-    return null;
+  async find(
+    searchFilter: string,
+  ): Promise<{ data: UsuariosEntity[]; count: number }> {
+    if (!searchFilter) {
+      const usuarios = await this.usuarioRepository.findAndCount({
+        where: {
+          deletedAt: null,
+        },
+      });
+
+      return {
+        data: usuarios[0],
+        count: usuarios[1],
+      };
+    }
+
+    const searchTerm = `usuarios.id || ';' || usuarios.nome || ';' || usuarios.sobrenome || ';' || usuarios.email || ';' || usuarios.role`;
+
+    const usuarios = await this.usuarioRepository
+      .createQueryBuilder('usuarios')
+      .where(`${searchTerm} ILIKE :searchFilter`, {
+        searchFilter: `%${searchFilter}%`,
+      })
+      .andWhere('usuarios.deleted_at is null')
+      .getManyAndCount();
+
+    return {
+      data: usuarios[0],
+      count: usuarios[1],
+    };
   }
 
-  async findOne(uuid: string): Promise<any> {
+  async findOne(uuid: string): Promise<UsuariosEntity> {
+    const usuarioExists = await this.usuarioRepository.findOne({
+      where: {
+        uuid: uuid,
+        deletedAt: null,
+      },
+    });
+
+    if (usuarioExists) {
+      return usuarioExists;
+    }
+
     return null;
   }
 

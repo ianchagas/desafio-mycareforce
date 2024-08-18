@@ -4,33 +4,52 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Post,
   Put,
   Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { CreateUsuarioDto, UpdateUsuarioDto } from '../dto/user.dto';
+import {
+  CreateUsuarioDto,
+  GetUsuariosQueryParamsDto,
+  UpdateUsuarioDto,
+} from '../dto/user.dto';
 import { CreateUsuarioUsecase } from '../usecase/create/create';
+import { FindOneUsuarioUsecase } from '../usecase/findOne/findOne';
+import { UsuariosEntity } from '../infra/typeorm/entity/usuarios.entity';
+import { uuidOptions } from '@app/shared/pipes/uuid.config';
+import { FindUsuariosUsecase } from '../usecase/find/find';
 
 @Controller('usuarios')
 export class UsuariosController {
-  constructor(private readonly createUsuarioUsecase: CreateUsuarioUsecase) {}
+  constructor(
+    private readonly createUsuarioUsecase: CreateUsuarioUsecase,
+    private readonly findOneUsuarioUsecase: FindOneUsuarioUsecase,
+    private readonly findUsuariosUsecase: FindUsuariosUsecase,
+  ) {}
 
   @Post('')
-  async create(@Body() payload: CreateUsuarioDto): Promise<any> {
-    return null;
-    // const createUsuario = await this.createUsuarioUsecase.execute(payload);
+  async create(@Body() payload: CreateUsuarioDto): Promise<UsuariosEntity> {
+    const createUsuario = await this.createUsuarioUsecase.execute(payload);
 
-    // return createUsuario;
+    return createUsuario;
   }
 
   @Get('')
-  async find(@Query() payload: any): Promise<any> {
-    return null;
+  @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
+  async find(
+    @Query() payload: GetUsuariosQueryParamsDto,
+  ): Promise<{ data: UsuariosEntity[]; count: number }> {
+    return await this.findUsuariosUsecase.execute(payload);
   }
 
   @Get('/:uuid')
-  async findOne(@Param('uuid') uuid: string): Promise<any> {
-    return null;
+  async findOne(
+    @Param('uuid', new ParseUUIDPipe(uuidOptions)) uuid: string,
+  ): Promise<UsuariosEntity> {
+    return await this.findOneUsuarioUsecase.execute(uuid);
   }
 
   @Put('/:uuid')
