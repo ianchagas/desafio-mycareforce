@@ -13,7 +13,11 @@ export class RefreshUsecase {
     );
 
     const createJwt: JwtObjectDto = {
-      data: decode.data,
+      uuid: decode.data.uuid,
+      nome: decode.data.nome,
+      sobrenome: decode.data.sobrenome,
+      email: decode.data.email,
+      isBanned: decode.data.isBanned,
     };
 
     return await JwtCreate.execute(createJwt);

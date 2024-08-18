@@ -38,13 +38,11 @@ export class LoginUsecase {
     }
 
     const createJwt: JwtObjectDto = {
-      data: {
-        uuid: usuario.uuid,
-        nome: usuario.nome,
-        sobrenome: usuario.sobrenome,
-        email: usuario.email,
-        isBanned: usuario.isBanned,
-      },
+      uuid: usuario.uuid,
+      nome: usuario.nome,
+      sobrenome: usuario.sobrenome,
+      email: usuario.email,
+      isBanned: usuario.isBanned,
     };
 
     const jwt = await JwtCreate.execute(createJwt);
