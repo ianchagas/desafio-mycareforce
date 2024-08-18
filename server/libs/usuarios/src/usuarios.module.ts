@@ -6,6 +6,7 @@ import { UsuarioRepository } from './infra/typeorm/repository/usuario.repository
 import { CreateUsuarioUsecase } from './usecase/create/create';
 import { FindOneUsuarioUsecase } from './usecase/findOne/findOne';
 import { FindUsuariosUsecase } from './usecase/find/find';
+import { DeleteUsuarioUsecase } from './usecase/delete/delete';
 
 @Module({
   providers: [
@@ -13,6 +14,7 @@ import { FindUsuariosUsecase } from './usecase/find/find';
     CreateUsuarioUsecase,
     FindOneUsuarioUsecase,
     FindUsuariosUsecase,
+    DeleteUsuarioUsecase,
   ],
   controllers: [UsuariosController],
   imports: [TypeOrmModule.forFeature([UsuariosEntity])],

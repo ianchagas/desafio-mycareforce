@@ -21,6 +21,7 @@ import { FindOneUsuarioUsecase } from '../usecase/findOne/findOne';
 import { UsuariosEntity } from '../infra/typeorm/entity/usuarios.entity';
 import { uuidOptions } from '@app/shared/pipes/uuid.config';
 import { FindUsuariosUsecase } from '../usecase/find/find';
+import { DeleteUsuarioUsecase } from '../usecase/delete/delete';
 
 @Controller('usuarios')
 export class UsuariosController {
@@ -28,6 +29,7 @@ export class UsuariosController {
     private readonly createUsuarioUsecase: CreateUsuarioUsecase,
     private readonly findOneUsuarioUsecase: FindOneUsuarioUsecase,
     private readonly findUsuariosUsecase: FindUsuariosUsecase,
+    private readonly deleteUsuarioUsecase: DeleteUsuarioUsecase,
   ) {}
 
   @Post('')
@@ -61,12 +63,16 @@ export class UsuariosController {
   }
 
   @Delete('/:uuid')
-  async delete(@Param('uuid') uuid: string): Promise<void> {
-    return null;
+  async delete(
+    @Param('uuid', new ParseUUIDPipe(uuidOptions)) uuid: string,
+  ): Promise<void> {
+    return await this.deleteUsuarioUsecase.execute(uuid);
   }
 
   @Put('/ban/:uuid')
-  async ban(@Param('uuid') uuid: string): Promise<void> {
+  async ban(
+    @Param('uuid', new ParseUUIDPipe(uuidOptions)) uuid: string,
+  ): Promise<void> {
     return null;
   }
 }

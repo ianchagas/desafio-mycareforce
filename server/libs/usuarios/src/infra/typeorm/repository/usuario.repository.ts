@@ -26,11 +26,7 @@ export class UsuarioRepository implements IUsuarioRepository {
     searchFilter: string,
   ): Promise<{ data: UsuariosEntity[]; count: number }> {
     if (!searchFilter) {
-      const usuarios = await this.usuarioRepository.findAndCount({
-        where: {
-          deletedAt: null,
-        },
-      });
+      const usuarios = await this.usuarioRepository.findAndCount();
 
       return {
         data: usuarios[0],
@@ -45,7 +41,6 @@ export class UsuarioRepository implements IUsuarioRepository {
       .where(`${searchTerm} ILIKE :searchFilter`, {
         searchFilter: `%${searchFilter}%`,
       })
-      .andWhere('usuarios.deleted_at is null')
       .getManyAndCount();
 
     return {
@@ -59,6 +54,7 @@ export class UsuarioRepository implements IUsuarioRepository {
       where: {
         uuid: uuid,
         deletedAt: null,
+        isBanned: false,
       },
     });
 
@@ -83,7 +79,13 @@ export class UsuarioRepository implements IUsuarioRepository {
     return null;
   }
 
-  async delete(uuid: string): Promise<any> {
+  async delete(usuario: UsuariosEntity): Promise<void> {
+    const softRemove = await this.usuarioRepository.softRemove(usuario);
+
+    if (softRemove) {
+      return null;
+    }
+
     return null;
   }
 

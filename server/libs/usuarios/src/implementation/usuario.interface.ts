@@ -5,8 +5,8 @@ export interface IUsuarioRepository {
   create(data: CreateUsuarioDto): Promise<UsuariosEntity>;
   update(data: UpdateUsuarioDto): Promise<any>;
   find(query: any): Promise<{ data: UsuariosEntity[]; count: number }>;
-  findOne(uuid: string): Promise<any>;
+  findOne(uuid: string): Promise<UsuariosEntity>;
   findByEmail(email: string): Promise<UsuariosEntity>;
-  delete(uuid: string): Promise<any>;
+  delete(usuario: UsuariosEntity): Promise<void>;
   ban(uuid: string): Promise<any>;
 }
