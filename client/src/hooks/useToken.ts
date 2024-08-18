@@ -14,7 +14,10 @@ const useToken = () => {
   useEffect(() => {
     const refreshToken = async () => {
       const expiresIn = sessionStorage.getItem("@react-clicknurse:expires_in");
-      if (!expiresIn) return;
+
+      if (!expiresIn) {
+        return;
+      }
 
       const expirationTime = parseInt(expiresIn, 10) * 1000;
       const refreshTokenTime = expirationTime - Date.now();
