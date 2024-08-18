@@ -4,12 +4,14 @@ import { LoginUsecase } from '../usecase/login/login';
 import { JwtDto } from '@app/shared/dto/jwt.dto';
 import { JwtValidate } from '@app/shared/utils/jwtValidate';
 import { RefreshUsecase } from '../usecase/refresh/refresh';
+import { LogoutUsecase } from '../usecase/logout/logout';
 
 @Controller()
 export class LoginController {
   constructor(
     private readonly loginUsecase: LoginUsecase,
     private readonly refreshTokenUsecase: RefreshUsecase,
+    private readonly logoutUsecase: LogoutUsecase,
   ) {}
 
   @Post('login')
@@ -23,7 +25,7 @@ export class LoginController {
   }
 
   @Post('logout')
-  async logout(): Promise<void> {
-    return null;
+  async logout(@Body() payload: { email: string }): Promise<void> {
+    return await this.logoutUsecase.execute(payload.email);
   }
 }

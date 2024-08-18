@@ -1,3 +1,4 @@
+import { UserRole } from '@app/shared/enum/userRole.enum';
 import { ComparePassword } from '@app/shared/utils/comparePassword';
 import { EncodePassword } from '@app/shared/utils/encodePassword';
 import { UpdateUsuarioDto } from '@app/usuarios/dto/user.dto';
@@ -53,6 +54,12 @@ export class UpdateUsuarioUsecase {
           'Email já consta cadastrado. Não é possível alterar',
         );
       }
+    }
+
+    if (payload.role === UserRole.ADMIN) {
+      throw new BadRequestException(
+        'Não é possível alterar uma conta para esse tipo de permissão.',
+      );
     }
 
     await this.usuarioRepository.update(uuid, payload);
