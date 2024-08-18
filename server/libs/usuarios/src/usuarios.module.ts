@@ -8,6 +8,7 @@ import { FindOneUsuarioUsecase } from './usecase/findOne/findOne';
 import { FindUsuariosUsecase } from './usecase/find/find';
 import { DeleteUsuarioUsecase } from './usecase/delete/delete';
 import { BanUsuarioUsecase } from './usecase/ban/ban';
+import { UpdateUsuarioUsecase } from './usecase/update/update';
 
 @Module({
   providers: [
@@ -17,6 +18,7 @@ import { BanUsuarioUsecase } from './usecase/ban/ban';
     FindUsuariosUsecase,
     DeleteUsuarioUsecase,
     BanUsuarioUsecase,
+    UpdateUsuarioUsecase,
   ],
   controllers: [UsuariosController],
   imports: [TypeOrmModule.forFeature([UsuariosEntity])],

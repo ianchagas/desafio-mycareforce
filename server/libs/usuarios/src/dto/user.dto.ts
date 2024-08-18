@@ -56,10 +56,27 @@ export class CreateUsuarioDto {
 }
 
 export class UpdateUsuarioDto {
+  @IsOptional()
+  @IsString()
   nome: string;
+
+  @IsOptional()
+  @IsString()
   sobrenome: string;
+
+  @IsOptional()
+  @IsEmail()
   email: string;
+
+  @IsOptional()
+  @IsEnum(UserRole, {
+    message:
+      'As permissões válidas "user roles" são (PROFISSIONAL, GESTAO E ADMIN).',
+  })
   role: UserRole;
+
+  @IsOptional()
+  @IsString()
   password: string;
 }
 

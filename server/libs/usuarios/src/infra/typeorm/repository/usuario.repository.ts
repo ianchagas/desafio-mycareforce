@@ -1,5 +1,5 @@
 import { IUsuarioRepository } from '@app/usuarios/implementation/usuario.interface';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsuariosEntity } from '../entity/usuarios.entity';
 import { Repository } from 'typeorm';
@@ -18,25 +18,30 @@ export class UsuarioRepository implements IUsuarioRepository {
     return await this.usuarioRepository.save(usuarioObject);
   }
 
-  async update(data: UpdateUsuarioDto): Promise<any> {
-    return null;
+  async update(uuid: string, payload: UpdateUsuarioDto): Promise<void> {
+    await this.usuarioRepository
+      .createQueryBuilder()
+      .update(payload)
+      .where({ uuid })
+      .returning([])
+      .execute();
   }
 
   async find(
     searchFilter: string,
   ): Promise<{ data: UsuariosEntity[]; count: number }> {
     if (!searchFilter) {
-      const usuarios = await this.usuarioRepository.findAndCount();
+      const [data, count] = await this.usuarioRepository.findAndCount();
 
       return {
-        data: usuarios[0],
-        count: usuarios[1],
+        data,
+        count,
       };
     }
 
     const searchTerm = `usuarios.id || ';' || usuarios.nome || ';' || usuarios.sobrenome || ';' || usuarios.email || ';' || usuarios.role`;
 
-    const usuarios = await this.usuarioRepository
+    const [data, count] = await this.usuarioRepository
       .createQueryBuilder('usuarios')
       .where(`${searchTerm} ILIKE :searchFilter`, {
         searchFilter: `%${searchFilter}%`,
@@ -44,8 +49,8 @@ export class UsuarioRepository implements IUsuarioRepository {
       .getManyAndCount();
 
     return {
-      data: usuarios[0],
-      count: usuarios[1],
+      data,
+      count,
     };
   }
 
@@ -70,6 +75,7 @@ export class UsuarioRepository implements IUsuarioRepository {
       where: {
         email,
       },
+      withDeleted: true,
     });
 
     if (emailExists) {

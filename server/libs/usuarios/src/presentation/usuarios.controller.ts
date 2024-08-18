@@ -23,6 +23,7 @@ import { uuidOptions } from '@app/shared/pipes/uuid.config';
 import { FindUsuariosUsecase } from '../usecase/find/find';
 import { DeleteUsuarioUsecase } from '../usecase/delete/delete';
 import { BanUsuarioUsecase } from '../usecase/ban/ban';
+import { UpdateUsuarioUsecase } from '../usecase/update/update';
 
 @Controller('usuarios')
 export class UsuariosController {
@@ -32,6 +33,7 @@ export class UsuariosController {
     private readonly findUsuariosUsecase: FindUsuariosUsecase,
     private readonly deleteUsuarioUsecase: DeleteUsuarioUsecase,
     private readonly banUsuarioUsecase: BanUsuarioUsecase,
+    private readonly updateUsuarioUsecase: UpdateUsuarioUsecase,
   ) {}
 
   @Post('')
@@ -58,10 +60,13 @@ export class UsuariosController {
 
   @Put('/:uuid')
   async update(
-    @Param('uuid') uuid: string,
+    @Param('uuid', new ParseUUIDPipe(uuidOptions)) uuid: string,
     @Body() payload: UpdateUsuarioDto,
   ): Promise<any> {
-    return null;
+    return await this.updateUsuarioUsecase.execute({
+      uuid,
+      payload,
+    });
   }
 
   @Delete('/:uuid')
