@@ -6,7 +6,6 @@ import { RedisController } from './redis.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
     NestRedisModule.forRoot({
       config: {
         host: process.env.REDIS_HOST,

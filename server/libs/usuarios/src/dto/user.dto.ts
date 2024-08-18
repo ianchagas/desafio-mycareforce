@@ -5,7 +5,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { UserRole } from '../enum/userRole.enum';
+import { UserRole } from '../../../shared/src/enum/userRole.enum';
 import { IsNotBlank } from '@app/shared/decorators/class-validator/IsNotBlank.decorator';
 
 export class CreateUsuarioDto {

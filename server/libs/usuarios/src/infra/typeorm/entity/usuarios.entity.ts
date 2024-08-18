@@ -1,4 +1,4 @@
-import { UserRole } from '@app/usuarios/enum/userRole.enum';
+import { UserRole } from '@app/shared/enum/userRole.enum';
 import {
   BeforeUpdate,
   Column,

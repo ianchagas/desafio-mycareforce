@@ -10,11 +10,13 @@ import { getMetadataArgsStorage } from 'typeorm';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     SharedModule,
     UsuariosModule,
-    LoginModule,
     RedisModule,
+    LoginModule,
     TypeOrmModule.forRoot({
       type: process.env.TYPEORM_CONNECTION,
       host: process.env.TYPEORM_HOST,

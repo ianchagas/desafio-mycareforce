@@ -85,6 +85,24 @@ export class UsuarioRepository implements IUsuarioRepository {
     return null;
   }
 
+  async findByEmailPassword(
+    email: string,
+    password: string,
+  ): Promise<UsuariosEntity> {
+    const usuario = await this.usuarioRepository.findOne({
+      where: {
+        email,
+        password,
+      },
+    });
+
+    if (usuario) {
+      return usuario;
+    }
+
+    return null;
+  }
+
   async delete(usuario: UsuariosEntity): Promise<void> {
     const softRemove = await this.usuarioRepository.softRemove(usuario);
 
