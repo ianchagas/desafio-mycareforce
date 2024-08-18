@@ -9,15 +9,19 @@ const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
-
   const { signIn } = useAuth();
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    signIn(email, password, passwordConfirmation);
+  };
 
   return (
     <Container>
       <Logo>
         <img src={logImg} alt="Click Nurse" />
       </Logo>
-      <Form onSubmit={() => signIn(email, password, passwordConfirmation)}>
+      <Form onSubmit={handleSubmit}>
         <FormTitle>Entrar</FormTitle>
         <Input
           placeholder="Email"
