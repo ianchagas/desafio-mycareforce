@@ -1,4 +1,10 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import usuariosService from "../services/usuarios.service";
 
 interface IAuthContext {
@@ -17,10 +23,23 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [logged, setLogged] = useState<boolean>(() => {
-    const isLogged = localStorage.getItem("@react-clicknurse:logged");
-
-    return !!isLogged;
+    const accessToken = sessionStorage.getItem(
+      "@react-clicknurse:access_token"
+    );
+    return !!accessToken;
   });
+
+  useEffect(() => {
+    // Revalida o estado `logged` ao montar o componente
+    const accessToken = sessionStorage.getItem(
+      "@react-clicknurse:access_token"
+    );
+    if (accessToken) {
+      setLogged(true);
+    } else {
+      setLogged(false);
+    }
+  }, []);
 
   const signIn = async (
     email: string,
@@ -29,6 +48,7 @@ const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   ) => {
     if (password !== passwordConfirmation) {
       alert("Passwords diferentes");
+      return;
     }
 
     try {

@@ -13,13 +13,27 @@ export const Container = styled.div`
 
 export const Profile = styled.div`
   color: ${(props) => props.theme.colors.white};
-  margin-right: 50px;
+  margin-left: 30px;
 `;
 
 export const Welcome = styled.h3`
   font-size: 25px;
 `;
 
-export const UserName = styled.span`
-  font-weight: normal;
+export const LogoutButton = styled.button`
+  margin-right: 30px;
+  font-size: 16px;
+  color: ${(props) => props.theme.colors.info};
+  border: none;
+  background: none;
+
+  transition: opacity 0.3s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  > svg {
+    font-size: 30px;
+  }
 `;
