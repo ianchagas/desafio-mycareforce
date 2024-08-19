@@ -29,6 +29,8 @@ Conteúdos da aplicação
 - Tive um problema pra implementar o carregamento da tela inicial, aparentemente o hook de usuário que fiz não está conseguindo fazer uma requisição ao backend em tempo de execução. <i>Sendo assim é necessário recarregar a página.</i>
 - Irá aparecer a opção de criar um novo usuário e também uma lista de usuários com a opção de <b>Ban</b> que fará o banimento de um usuário da plataforma.
 <br>
+<br>
+
 - Em tela recomendo testar da seguinte forma:
   - Logar como admin em um navegador. (recarregue a página)
   - Crie um usuário de teste.
