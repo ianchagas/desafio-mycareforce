@@ -1,73 +1,89 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+<h1 align="center">Desafio Backend NestJS - Mycareforce</h1>
+<p align="center">Desafio de desenvolvimento de login de usuários.</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Conteúdos da aplicação
+=================
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# 💡 Features solicitada
 
-## Description
+- ✅ Registro em plataforma contendo nome, email e password.
+- ✅ Login contendo email e password para validação.
+- ✅ Sessão persistente.
+- ✅ Autenticação sem bibliotecas de autenticação (como Keycloak).
+- ✅ Possibilidade de banir users / invalidar token
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 💡 Features adicionais
+- ✅ Criado CRUD de usuários.
+- ✅ Criado refresh token automático enquanto usuário está logado.
+- ✅ Desenvolvido lógica usando Redis para armazenamento de sessões.
+- ✅ Testes unitários implementados no CRUD de usuários.
+- ❌ Deploy: não consegui achar uma forma de fazer deploy onde eu conseguisse manipular o Redis tão bem quanto local.
 
-## Installation
+<br>
+
+# 📋 Fluxo da aplicação
+- Acessar [localhost:9091](http://localhost:9091/)
+- O login de admin é necessário para executar ações:
+  - email: admin@mycareforce.com
+  - senha: 12345
+- Tive um problema pra implementar o carregamento da tela inicial, aparentemente o hook de usuário que fiz não está conseguindo fazer uma requisição ao backend em tempo de execução. <i>Sendo assim é necessário recarregar a página.</i>
+- Irá aparecer a opção de criar um novo usuário e também uma lista de usuários com a opção de <b>Ban</b> que fará o banimento de um usuário da plataforma.
+<br>
+- Em tela recomendo testar da seguinte forma:
+  - Logar como admin em um navegador. (recarregue a página)
+  - Crie um usuário de teste.
+  - Logue com esse usuário em uma aba anônima.
+  - Faça o banimento do usuário.
+  - O usuário banido irá perder a sessão e ser redirecionado ao login.
+  - Enquanto nada acontecer o refresh token ficará rodando em segundo plano.
+
+<br>
+
+# ❗ Pré-requisitos para rodar o projeto
+
+- [Docker](https://www.docker.com/products/docker-desktop) e [Docker Compose](https://docs.docker.com/compose) devidamente configurado.
+- [Git](https://git-scm.com)
+- [Node.js](https://nodejs.org/en/) (versão 22+)
+- [Yarn](https://yarnpkg.com)
+
+Para os testes manuais das rotas é uma opção utilizar o [Imsomnia](https://insomnia.rest/download) ou o [Postman](https://www.postman.com).
+Deixei um arquivo chamado <b>mycareforce-insomnia.json</b> para testes manuais do backend.
+
+<br>
+
+# 💻 Rodando o projeto
 
 ```bash
-$ yarn install
+# Clone este repositório
+$ git clone <https://github.com/ianchagas/desafio-mycareforce>
+
+# Acesse a pasta do projeto no terminal/cmd
+$ cd desafio-mycareforce
+
+# Rode o script previamente configurado para criar banco, redis e rodar o projeto
+$ sh run.sh
+
 ```
+- O script irá fazer todo o processo de criação da imagem do banco de dados e rodará as migrations para criar a tabela e usuário admin padrão. Também criará um Redis configurado para as sessões e por último irá instalar e rodar o backend e o frontend.
 
-## Running the app
-
+<br>
+  
+# 📝 Testes Unitários
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+# Para rodar os testes unitários vá até a pasta /server e use o comando
+$ yarn test
 ```
 
-## Test
+<br>
 
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+# ⚡ Técnologias Utilizadas
+  
+- TypeScript
+- Node.JS
+- NestJS
+- Postgres
+- Redis
+- Docker
+- TypeORM
+- Jest
+- React
