@@ -79,6 +79,7 @@ export class LoginUsecase {
       nome: usuario.nome,
       sobrenome: usuario.sobrenome,
       email: usuario.email,
+      role: usuario.role,
       isBanned: usuario.isBanned,
     };
 

@@ -45,6 +45,12 @@
       ],
       "@app/shared/*": [
         "libs/shared/src/*"
+      ],
+      "@app/dados": [
+        "libs/dados/src"
+      ],
+      "@app/dados/*": [
+        "libs/dados/src/*"
       ]
     }
   }

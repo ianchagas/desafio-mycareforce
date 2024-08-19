@@ -23,6 +23,7 @@ export class RefreshUsecase {
       nome: decode.data.nome,
       sobrenome: decode.data.sobrenome,
       email: decode.data.email,
+      role: decode.data.role,
       isBanned: decode.data.isBanned,
     };
 

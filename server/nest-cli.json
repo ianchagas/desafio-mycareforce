@@ -41,6 +41,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/shared/tsconfig.lib.json"
       }
+    },
+    "dados": {
+      "type": "library",
+      "root": "libs/dados",
+      "entryFile": "index",
+      "sourceRoot": "libs/dados/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/dados/tsconfig.lib.json"
+      }
     }
   }
 }

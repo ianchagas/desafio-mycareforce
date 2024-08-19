@@ -18,6 +18,8 @@
     "@app/redis/(.*)": "<rootDir>/../libs/redis/src/$1",
     "@app/redis": "<rootDir>/../libs/redis/src",
     "@app/shared/(.*)": "<rootDir>/../libs/shared/src/$1",
-    "@app/shared": "<rootDir>/../libs/shared/src"
+    "@app/shared": "<rootDir>/../libs/shared/src",
+    "@app/dados/(.*)": "<rootDir>/../libs/dados/src/$1",
+    "@app/dados": "<rootDir>/../libs/dados/src"
   }
 }

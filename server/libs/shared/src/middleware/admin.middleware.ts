@@ -11,7 +11,7 @@ import { RedisService } from '@app/redis/redis.service';
 import { UserRole } from '../enum/userRole.enum';
 
 @Injectable()
-export class UsuariosMiddleware implements NestMiddleware {
+export class AdminMiddleware implements NestMiddleware {
   constructor(private readonly redis: RedisService) {}
   async use(req: Request, res: Response, next: NextFunction): Promise<void> {
     const bearerToken: string = req.headers.authorization;
@@ -36,7 +36,7 @@ export class UsuariosMiddleware implements NestMiddleware {
       throw new UnauthorizedException('Usuário banido ou não autenticado.');
     }
 
-    if (usuarios.userData.role === UserRole.ADMIN) {
+    if (usuarios.userData.role !== UserRole.ADMIN) {
       throw new UnauthorizedException(
         'Nível de permissão inválido para a funcionalidade.',
       );
