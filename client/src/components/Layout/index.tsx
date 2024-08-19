@@ -3,19 +3,23 @@ import { Grid } from "./styles";
 import MainHeader from "../MainHeader";
 import Aside from "../Aside";
 import Content from "../Content";
-import { useUser } from "../../hooks/user";
+// import { useUser } from "../../hooks/user";
+import { IUsuarios } from "../../utils/usuarios.interface";
 
-type Props = {
-  children?: React.ReactElement<any>; // Aceita um único elemento React
-};
+// type Props = {
+//   children?: React.ReactElement<any>;
+// };
 
-const Layout: React.FC<Props> = ({ children }) => {
-  const { user } = useUser();
+interface LayoutProps {
+  user: IUsuarios | null;
+  children?: React.ReactElement<any>;
+}
 
+const Layout: React.FC<LayoutProps> = ({ children, user }) => {
   return (
     <Grid>
       <MainHeader nome={user?.nome || "Usuário"} />
-      <Aside />
+      <Aside user={user} />
       <Content>{children}</Content>
     </Grid>
   );

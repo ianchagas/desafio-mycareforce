@@ -31,8 +31,8 @@ export const LogoImg = styled.img`
 export const MenuContainer = styled.nav`
   display: flex;
   flex-direction: column;
-  margin-left: 30px;
-  margin-top: 40px;
+  align-items: center;
+  margin-right: 15%;
 `;
 
 export const MenuItemLink = styled.a`

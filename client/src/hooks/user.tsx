@@ -1,15 +1,7 @@
 // UserContext.tsx
 import React, { createContext, useContext, useEffect, useState } from "react";
 import usuariosService from "../services/usuarios.service";
-
-interface IUsuarios {
-  uuid: string;
-  nome: string;
-  sobrenome: string;
-  email: string;
-  role: string;
-  isBanned: boolean;
-}
+import { IUsuarios } from "../utils/usuarios.interface";
 
 interface IUserContext {
   user: IUsuarios | null;

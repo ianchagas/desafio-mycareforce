@@ -7,10 +7,9 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
 
-    html, body,  #root {
+    html, body, #root {
         height: 100%;
     }
-
 
     *, button, input {
         border: 0;
@@ -20,5 +19,21 @@ export default createGlobalStyle`
 
     button {
         cursor: pointer;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto; 
+    }
+
+    #root {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
     }
 `;
