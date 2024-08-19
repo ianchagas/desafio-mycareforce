@@ -24,6 +24,7 @@ import { FindUsuariosUsecase } from '../usecase/find/find';
 import { DeleteUsuarioUsecase } from '../usecase/delete/delete';
 import { BanUsuarioUsecase } from '../usecase/ban/ban';
 import { UpdateUsuarioUsecase } from '../usecase/update/update';
+import { FindByEmailUsecase } from '../usecase/findByEmail/findByEmail';
 
 @Controller('usuarios')
 export class UsuariosController {
@@ -31,6 +32,7 @@ export class UsuariosController {
     private readonly createUsuarioUsecase: CreateUsuarioUsecase,
     private readonly findOneUsuarioUsecase: FindOneUsuarioUsecase,
     private readonly findUsuariosUsecase: FindUsuariosUsecase,
+    private readonly findByEmailUsecase: FindByEmailUsecase,
     private readonly deleteUsuarioUsecase: DeleteUsuarioUsecase,
     private readonly banUsuarioUsecase: BanUsuarioUsecase,
     private readonly updateUsuarioUsecase: UpdateUsuarioUsecase,
@@ -56,6 +58,11 @@ export class UsuariosController {
     @Param('uuid', new ParseUUIDPipe(uuidOptions)) uuid: string,
   ): Promise<UsuariosEntity> {
     return await this.findOneUsuarioUsecase.execute(uuid);
+  }
+
+  @Get('/email/:email')
+  async findByEmail(@Param('email') email: string): Promise<UsuariosEntity> {
+    return await this.findByEmailUsecase.execute(email);
   }
 
   @Put('/:uuid')

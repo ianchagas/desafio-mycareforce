@@ -3,12 +3,16 @@ import { Container, Profile, Welcome, LogoutButton } from "./styles";
 import { useAuth } from "../../hooks/auth";
 import { MdExitToApp } from "react-icons/md";
 
-const MainHeader: React.FC = () => {
+type MainHeaderProps = {
+  nome: string;
+};
+
+const MainHeader: React.FC<MainHeaderProps> = ({ nome }) => {
   const { signOut } = useAuth();
   return (
     <Container>
       <Profile>
-        <Welcome>Olá, usuario</Welcome>
+        <Welcome>Olá, {nome}</Welcome>
       </Profile>
       <LogoutButton onClick={signOut}>
         <MdExitToApp />
