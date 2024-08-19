@@ -7,20 +7,26 @@ import Profissional from "../pages/Profissional/Profissional";
 import Gestao from "../pages/Gestao/Gestao";
 
 const AppRoutes: React.FC = () => {
+  const { user, loading } = useUser();
   const navigate = useNavigate();
-  const { user } = useUser();
 
   useEffect(() => {
-    if (user) {
-      if (user.role === "ADMIN") {
-        navigate("/admin");
-      } else if (user.role === "PROFISSIONAL") {
-        navigate("/profissional");
-      } else if (user.role === "GESTOR") {
-        navigate("/gestor");
+    if (!loading) {
+      if (user) {
+        if (user.role === "ADMIN") {
+          navigate("/admin", { replace: true });
+        } else if (user.role === "PROFISSIONAL") {
+          navigate("/profissional", { replace: true });
+        } else if (user.role === "GESTOR") {
+          navigate("/gestor", { replace: true });
+        }
+      } else {
+        navigate("/", { replace: true });
       }
     }
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <Layout user={user}>

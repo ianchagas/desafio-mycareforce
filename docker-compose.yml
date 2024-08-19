@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   database:
@@ -21,7 +21,7 @@ services:
     restart: always
     container_name: click-nurse-redis
     ports:
-      - '6379:6379'
+      - "6379:6379"
     volumes:
       - redis:/data/redis
     environment:

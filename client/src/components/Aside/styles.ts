@@ -45,6 +45,8 @@ export const MenuItemLink = styled.a`
 
   transition: opacity 0.3s;
 
+  cursor: pointer;
+
   &:hover {
     opacity: 0.7;
   }

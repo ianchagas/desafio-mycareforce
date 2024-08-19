@@ -9,7 +9,6 @@ import { FindUsuariosUsecase } from './usecase/find/find';
 import { DeleteUsuarioUsecase } from './usecase/delete/delete';
 import { BanUsuarioUsecase } from './usecase/ban/ban';
 import { UpdateUsuarioUsecase } from './usecase/update/update';
-import { FindByEmailPasswordUsecase } from './usecase/findByEmailPassword/findByEmailPassword';
 import { ConfigModule } from '@nestjs/config';
 import { FindByEmailUsecase } from './usecase/findByEmail/findByEmail';
 import { RedisModule } from '@app/redis';
@@ -22,7 +21,6 @@ const UsuariosProviders = [
   DeleteUsuarioUsecase,
   BanUsuarioUsecase,
   UpdateUsuarioUsecase,
-  FindByEmailPasswordUsecase,
   FindByEmailUsecase,
 ];
 @Module({

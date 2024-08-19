@@ -64,6 +64,10 @@ export class AppModule implements NestModule {
           path: 'dados/gestor',
           method: RequestMethod.GET,
         },
+        {
+          path: 'usuarios/email/:email',
+          method: RequestMethod.GET,
+        },
       )
       .forRoutes('*');
 

@@ -1,10 +1,4 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
 import usuariosService from "../services/usuarios.service";
 
 interface IAuthContext {
@@ -28,18 +22,6 @@ const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     );
     return !!accessToken;
   });
-
-  useEffect(() => {
-    // Revalida o estado `logged` ao montar o componente
-    const accessToken = sessionStorage.getItem(
-      "@react-clicknurse:access_token"
-    );
-    if (accessToken) {
-      setLogged(true);
-    } else {
-      setLogged(false);
-    }
-  }, []);
 
   const signIn = async (
     email: string,
@@ -67,8 +49,8 @@ const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
       sessionStorage.setItem("@react-clicknurse:expires_in", expires_in);
 
       setLogged(true);
-    } catch (error) {
-      alert("Erro no login: " + error);
+    } catch (error: any) {
+      alert("Erro no login: " + error.data.message);
     }
   };
 
@@ -78,16 +60,11 @@ const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
       if (email) {
         await usuariosService.post("/logout", { email });
       }
-    } catch (error) {
-      console.error("Erro ao fazer logout:", error);
+    } catch (error: any) {
+      console.error("Erro ao fazer logout:", error.data.message);
     }
 
-    sessionStorage.removeItem("@react-clicknurse:logged");
-    sessionStorage.removeItem("@react-clicknurse:logged-email");
-    sessionStorage.removeItem("@react-clicknurse:access_token");
-    sessionStorage.removeItem("@react-clicknurse:refresh_token");
-    sessionStorage.removeItem("@react-clicknurse:expires_in");
-
+    sessionStorage.clear();
     setLogged(false);
   };
 

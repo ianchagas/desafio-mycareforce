@@ -31,7 +31,9 @@ export class UsuarioRepository implements IUsuarioRepository {
     searchFilter: string,
   ): Promise<{ data: UsuariosEntity[]; count: number }> {
     if (!searchFilter) {
-      const [data, count] = await this.usuarioRepository.findAndCount();
+      const [data, count] = await this.usuarioRepository.findAndCount({
+        withDeleted: true,
+      });
 
       return {
         data,
@@ -46,6 +48,7 @@ export class UsuarioRepository implements IUsuarioRepository {
       .where(`${searchTerm} ILIKE :searchFilter`, {
         searchFilter: `%${searchFilter}%`,
       })
+      .withDeleted()
       .getManyAndCount();
 
     return {
